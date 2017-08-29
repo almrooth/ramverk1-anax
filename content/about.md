@@ -1,0 +1,6 @@
+---
+title: "Om sidan"
+...
+# Om sidan
+
+Om min sida och kursen kanske...
