@@ -4,7 +4,7 @@
  */
 return [
     // Defaults to use when creating urls.
-    //"siteUrl"       => null,
+    "siteUrl"       => "http://localhost:8080/dbwebb-kurser/ramverk1/me/anax/htdocs",
     //"baseUrl"       => null,
     //"staticSiteUrl" => null,
     //"staticBaseUrl" => null,

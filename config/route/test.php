@@ -4,5 +4,7 @@
  */
 $app->router->add("test", function () use ($app) {
     $app->view->add("test/test");
-    $app->renderPage(["title" => "testsidan"]);
+    $app->view->add("report/sidebar", [], "sidebar-right");
+    // $app->renderPage(["title" => "testsidan"]);
+    $app->renderPage(["title" => "koko"]);
 });

@@ -26,6 +26,13 @@ $app->router->always(function () use ($app) {
     $content = file_get_contents($file);
     $content = $app->textfilter->parse($content, ["yamlfrontmatter", "shortcode", "markdown", "titlefromheader"]);
 
+    // Add sidebar if specified
+    if (isset($content->frontmatter["sidebar"])) {
+        $sidebar = $content->frontmatter["sidebar"];
+        $sidebar_region = isset($content->frontmatter["sidebar_region"]) ? : "sidebar";
+        $app->view->add("sidebars/" . $sidebar, [], $sidebar_region);
+    }
+
     // Render a standard page using layout
     $app->view->add("default1/article", [
         "content" => $content->text
