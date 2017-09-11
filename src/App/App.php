@@ -22,9 +22,9 @@ class App
     /**
      * Return a link to a specified url.
      */
-    public function link($url)
+    public function link($path)
     {
-        return $this->url->create($url);
+        return $this->url->create($path);
     }
 
 

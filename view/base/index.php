@@ -16,6 +16,6 @@
         <p>När ni inte hittar mig bakom datorn finns jag ofta på resande eller löpande fot, gärna i ett varmt land med cool natur alternativt tränandes för en kommande triathlondebut.</p>
     </div>
 
-    <img src="<?= $app->link("/img/me.jpg") ?>" alt="Tobias Almroth">
+    <img src="<?= $app->link("img/me.jpg") ?>" alt="Tobias Almroth">
 
 </div>

@@ -4,8 +4,6 @@ sidebar: "reports"
 ...
 # Kmom 01 - Ramverk
 
-Så var det dags för en ny termin och en ny kurs. Jag har faktiskt längtat lite även när jag legat på stranden i solen.
-
 Det här inledande momentet kände som en rimlig uppfräshning över PHP och Anax. Inga egentliga problem där mer än att jag höll på en stund och testade lite olika vyer, layouter och templatefiler. Modifierade min huvud-layout så den ändrar lite klasser i htmlen beroende på om det finns en sidebar eller inte.
 
 Kändes som ett lagom moment med flera bra artiklar och videos att titta på. 
