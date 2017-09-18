@@ -2,15 +2,15 @@
 
 namespace Talm\Comment;
 
-use \Anax\Common\AppInjectableInterface;
-use \Anax\Common\AppInjectableTrait;
+use \Anax\DI\InjectionAwareInterface;
+use \Anax\DI\InjectionAwareTrait;
 
 /**
 * A controller for the comment module.
 */
-class CommentController implements AppInjectableInterface
+class CommentController implements InjectionAwareInterface
 {
-    use AppInjectableTrait;
+    use InjectionAwareTrait;
     
     
     /**
@@ -20,8 +20,19 @@ class CommentController implements AppInjectableInterface
      */
     public function getReset()
     {
-        $this->app->session->destroy();
-        $this->app->redirect("comments");
+        $this->di->get("session")->destroy();
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
+    }
+
+
+    /**
+     * Start the session
+     *
+     * @return void
+     */
+    public function anyStart()
+    {
+        $this->di->get("session")->start();
     }
 
 
@@ -34,17 +45,17 @@ class CommentController implements AppInjectableInterface
     {
         // Title of page
         $title = "Comments";
-
+        
         // Get all comments
-        $comments = $this->app->comment->getComments();
-
+        $comments = $this->di->get("comment")->getComments();
+        
         // Parse all comments for markdown
         foreach ($comments as $key => $comment) {
-            $comments[$key]["text"] = $this->app->textfilter->parse($comment["text"], ["markdown"])->text;
+            $comments[$key]["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
         }
 
-        $this->app->view->add("comment/comments", ["comments" => $comments]);
-        $this->app->renderPage(["title" => $title]);
+        $this->di->get("view")->add("comment/comments", ["comments" => $comments]);
+        $this->di->get("pageRender")->renderPage(["title" => $title]);
     }
 
 
@@ -56,13 +67,13 @@ class CommentController implements AppInjectableInterface
     public function postComment()
     {
         $comment = [];
-        $comment["email"] = htmlspecialchars($this->app->request->getPost("email"));
-        $comment["text"] = htmlspecialchars($this->app->request->getPost("text"));
-
-        // Add comment to all comments
-        $this->app->comment->addComment($comment);
+        $comment["email"] = htmlspecialchars($this->di->get("request")->getPost("email"));
+        $comment["text"] = htmlspecialchars($this->di->get("request")->getPost("text"));
         
-        $this->app->redirect("comments");
+        // Add comment to all comments
+        $this->di->get("comment")->addComment($comment);
+        
+        $this->di->get("response")->redirect("comments");
     }
 
 
@@ -75,40 +86,40 @@ class CommentController implements AppInjectableInterface
     public function getComment($id)
     {
         // Get single comment
-        $comment = $this->app->comment->getComment($id);
+        $comment = $this->di->get("comment")->getComment($id);
         
         // Parse comment for markdown
-        $comment["text"] = $this->app->textfilter->parse($comment["text"], ["markdown"])->text;
+        $comment["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
         
         $title = "Comment # " . $id;
 
         // Add to view and render
-        $this->app->view->add("comment/comment", ["comment" => $comment]);
-        $this->app->renderPage(["title" => $title]);
+        $this->di->get("view")->add("comment/comment", ["comment" => $comment]);
+        $this->di->get("pageRender")->renderPage(["title" => $title]);
     }
 
 
 
     public function editComment($id)
     {
-        $comment = $this->app->comment->getComment($id);
+        $comment = $this->di->get("comment")->getComment($id);
 
         $title = "Edit comment";
 
-        $this->app->view->add("comment/edit", ["comment" => $comment]);
-        $this->app->renderPage(["title" => $title]);
+        $this->di->get("view")->add("comment/edit", ["comment" => $comment]);
+        $this->di->get("pageRender")->renderPage(["title" => $title]);
     }
 
 
     public function upsertComment()
     {
         $comment = [];
-        $comment["id"] = htmlspecialchars($this->app->request->getPost("id"));
-        $comment["email"] = htmlspecialchars($this->app->request->getPost("email"));
-        $comment["text"] = htmlspecialchars($this->app->request->getPost("text"));
+        $comment["id"] = htmlspecialchars($this->di->get("request")->getPost("id"));
+        $comment["email"] = htmlspecialchars($this->di->get("request")->getPost("email"));
+        $comment["text"] = htmlspecialchars($this->di->get("request")->getPost("text"));
 
-        $this->app->comment->upsertComment($comment);
-        $this->app->redirect("comments");
+        $this->di->get("comment")->upsertComment($comment);
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
     }
 
 
@@ -120,7 +131,7 @@ class CommentController implements AppInjectableInterface
      */
     public function deleteComment($id)
     {
-        $this->app->comment->deleteComment($id);
-        $this->app->redirect("comments");
+        $this->di->get("comment")->deleteComment($id);
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
     }
 }

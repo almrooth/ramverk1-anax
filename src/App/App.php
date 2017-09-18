@@ -26,35 +26,4 @@ class App
     {
         return $this->url->create($path);
     }
-
-
-    /**
-     * Render a standard web page using a specific layout.
-     */
-    public function renderPage($data, $status = 200)
-    {
-        // Append to title
-        $data["title"] = $data["title"] . " | Tobias Almroth";
-
-        // Stylesheets
-        $data["stylesheets"] = [
-            "css/style.css",
-            "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        ];
-
-        // Javascripts
-
-
-        // Add common header, navbar and footer
-        $this->view->add("partials/header", [], "header");
-        $this->view->add("partials/navbar", [], "navbar");
-        $this->view->add("partials/footer", [], "footer");
-
-        // Add layout, render it, add to response and send.
-        $this->view->add("layout", $data, "layout");
-        $body = $this->view->renderBuffered("layout");
-        $this->response->setBody($body)
-                       ->send($status);
-        exit;
-    }
 }

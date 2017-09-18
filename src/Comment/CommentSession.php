@@ -27,9 +27,9 @@ class CommentSession
     *
     * @return self
     */
-    public function inject($dependency)
+    public function injectSession($session)
     {
-        $this->session = $dependency["session"];
+        $this->session = $session;
         return $this;
     }
     
@@ -121,6 +121,7 @@ class CommentSession
         foreach ($comments as $key => $val) {
             if ($val["id"] == $comment["id"]) {
                 $comments[$key] = $comment;
+                $comments[$key]["gravatarLink"] = $this->gravatarLink($comment["email"]);
                 break;
             }
         }

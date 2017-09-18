@@ -2,11 +2,17 @@
 
 namespace Talm\FlatFile;
 
+use \Anax\DI\InjectionAwareInterface;
+use \Anax\DI\InjectionAwareTrait;
+
 /**
  * Flat file class.
  */
-class FlatFile
+class FlatFile implements InjectionAwareInterface
 {
+    use InjectionAwareTrait;
+
+    
     /**
      * Check if route match existing file.
      */
