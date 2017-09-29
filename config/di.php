@@ -6,6 +6,14 @@ return [
 
     // Services to add to the container.
     "services" => [
+        "db" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Database\DatabaseQueryBuilder();
+                $obj->configure("database.php");
+                return $obj;
+            }
+        ],
         "request" => [
             "shared" => true,
             "callback" => function () {
@@ -61,9 +69,11 @@ return [
         ],
         "session" => [
             "shared" => true,
+            "active" => true,
             "callback" => function () {
                 $session = new \Anax\Session\SessionConfigurable();
                 $session->configure("session.php");
+                $session->start();
                 return $session;
             }
         ],
@@ -140,6 +150,14 @@ return [
             "shared" => false,
             "callback" => function () {
                 $obj = new \Talm\Comment\CommentController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "bookController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Book\BookController();
                 $obj->setDI($this);
                 return $obj;
             }

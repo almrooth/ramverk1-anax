@@ -86,6 +86,14 @@ textarea {
     text-decoration: none;
 }
 
+.htmlform {
+    max-width: 450px;
+}
+
+th, td {
+    padding: 1em;
+}
+
 /* Header */
 
 .header-wrap {
@@ -128,6 +136,29 @@ textarea {
 
 .site-navbar a:hover {
     text-decoration: underline;
+}
+
+.navbar-dropdown {
+    position: relative;
+}
+
+.navbar-dropdown ul {
+    display: none;
+    position: absolute;
+}
+
+.navbar-dropdown:hover ul{
+    display: block;
+}
+
+.navbar-dropdown li {
+    background-color: #456;
+    padding: 1em 0;
+}
+
+.navbar-dropdown a {
+    color: #fff;
+    padding: 1em;
 }
 
 /* Main */

@@ -2,12 +2,12 @@
 
 return [
     "routes" => [
-        [
-            "info" => "Start the session",
-            "requestMethod" => null,
-            "path" => "**",
-            "callable" => ["commentController", "anyStart"],
-        ],
+        // [
+        //     "info" => "Start the session",
+        //     "requestMethod" => null,
+        //     "path" => "**",
+        //     "callable" => ["commentController", "anyStart"],
+        // ],
         [
             "info" => "Reset and delete all comments",
             "requestMethod" => "get",
