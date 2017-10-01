@@ -76,6 +76,6 @@ class CreateForm extends FormModel
         $book->isbn     = $this->form->value("isbn");
         $book->image    = $this->form->value("image");
         $book->save();
-        $this->di->get("response")->redirect("book");
+        $this->di->get("response")->redirect($this->di->get("url")->create("book"));
     }
 }

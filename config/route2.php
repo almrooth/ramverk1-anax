@@ -27,14 +27,24 @@ return [
             "file" => __DIR__ . "/route2/remserver.php",
         ],
         [
-            // To mount remserver routes
-            "mount" => null,
+            // To mount comment routes
+            "mount" => "comment",
             "file" => __DIR__ . "/route2/comment.php",
         ],
         [
             // Add routes from bookController and mount on book/
             "mount" => "book",
             "file" => __DIR__ . "/route2/bookController.php",
+        ],
+        [
+            // Add routes from userController and mount on user/
+            "mount" => "user",
+            "file" => __DIR__ . "/route2/userController.php",
+        ],
+        [
+            // Add routes from userController and mount on user/
+            "mount" => "admin",
+            "file" => __DIR__ . "/route2/adminController.php",
         ],
         [
             // Keep this last since its a catch all

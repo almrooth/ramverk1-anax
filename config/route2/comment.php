@@ -2,53 +2,35 @@
 
 return [
     "routes" => [
-        // [
-        //     "info" => "Start the session",
-        //     "requestMethod" => null,
-        //     "path" => "**",
-        //     "callable" => ["commentController", "anyStart"],
-        // ],
         [
-            "info" => "Reset and delete all comments",
-            "requestMethod" => "get",
-            "path" => "comments/reset",
-            "callable" => ["commentController", "getReset"],
+            "info" => "Check user is logged in",
+            "requestMethod" => null,
+            "path" => "**",
+            "callable" => ["commentController", "checkLogin"],
         ],
         [
-            "info" => "Get all comments",
-            "requestMethod" => "get",
-            "path" => "comments",
-            "callable" => ["commentController", "getComments"],
-        ],
-        [
-            "info" => "Post a comment",
-            "requestMethod" => "post",
-            "path" => "comment",
-            "callable" => ["commentController", "postComment"],
+            "info" => "Get all comments and post new comment",
+            "requestMethod" => "get|post",
+            "path" => "",
+            "callable" => ["commentController", "getPostIndex"],
         ],
         [
             "info" => "Get a single comment",
             "requestMethod" => "get",
-            "path" => "comment/{id:digit}",
+            "path" => "{id:digit}",
             "callable" => ["commentController", "getComment"],
         ],
         [
-            "info" => "Get comment to edit",
-            "requestMethod" => "get",
-            "path" => "comment/edit/{id:digit}",
-            "callable" => ["commentController", "editComment"],
-        ],
-        [
             "info" => "Update comment",
-            "requestMethod" => "post",
-            "path" => "comment/edit",
-            "callable" => ["commentController", "upsertComment"],
+            "requestMethod" => "get|post",
+            "path" => "update/{id:digit}",
+            "callable" => ["commentController", "getPostUpdate"],
         ],
         [
             "info" => "Delete a comment",
             "requestMethod" => "get",
-            "path" => "comment/delete/{id:digit}",
-            "callable" => ["commentController", "deleteComment"],
+            "path" => "delete/{id:digit}",
+            "callable" => ["commentController", "getDelete"],
         ],
     ]
 ];

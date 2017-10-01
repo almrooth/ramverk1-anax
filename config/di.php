@@ -24,7 +24,12 @@ return [
         ],
         "response" => [
             "shared" => true,
-            "callback" => "\Anax\Response\Response",
+            // "callback" => "\Anax\Response\Response",
+            "callback" => function () {
+                $obj = new \Anax\Response\ResponseUtility();
+                $obj->setDI($this);
+                return $obj;
+            }
         ],
         "url" => [
             "shared" => true,
@@ -138,14 +143,14 @@ return [
                 return $obj;
             }
         ],
-        "comment" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Talm\Comment\CommentSession();
-                $obj->injectSession($this->get("session"));
-                return $obj;
-            }
-        ],
+        // "comment" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $obj = new \Talm\Comment\CommentSession();
+        //         $obj->injectSession($this->get("session"));
+        //         return $obj;
+        //     }
+        // ],
         "commentController" => [
             "shared" => false,
             "callback" => function () {
@@ -158,6 +163,22 @@ return [
             "shared" => true,
             "callback" => function () {
                 $obj = new \Anax\Book\BookController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "userController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Talm\Comment\UserController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "adminController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Talm\Comment\AdminController();
                 $obj->setDI($this);
                 return $obj;
             }

@@ -2,136 +2,114 @@
 
 namespace Talm\Comment;
 
+use \Anax\Configure\ConfigureInterface;
+use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
 
+use \Talm\Comment\HTMLForm\LoginForm;
+use \Talm\Comment\HTMLForm\RegisterForm;
+use \Talm\Comment\HTMLForm\AddCommentForm;
+use \Talm\Comment\HTMLForm\UpdateCommentForm;
+
 /**
-* A controller for the comment module.
-*/
-class CommentController implements InjectionAwareInterface
+ * A controller class.
+ */
+class CommentController implements
+    ConfigureInterface,
+    InjectionAwareInterface
 {
-    use InjectionAwareTrait;
-    
-    
-    /**
-     * Reset all comments/session.
-     *
-     * @return void
-     */
-    public function getReset()
-    {
-        $this->di->get("session")->destroy();
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
-    }
+    use ConfigureTrait,
+        InjectionAwareTrait;
 
 
     /**
-     * Start the session
-     *
-     * @return void
+     * @var $data description
      */
-    public function anyStart()
-    {
-        $this->di->get("session")->start();
-    }
+    //private $data;
 
 
-    /**
-     * Get all comments
-     *
-     * @return void
-     */
-    public function getComments()
+    public function checkLogin()
     {
-        // Title of page
-        $title = "Comments";
-        
-        // Get all comments
-        $comments = $this->di->get("comment")->getComments();
-        
-        // Parse all comments for markdown
-        foreach ($comments as $key => $comment) {
-            $comments[$key]["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
+        if (!$this->di->get("session")->get("user_id")) {
+            $this->di->get("response")->redirect("user/login");
         }
-
-        $this->di->get("view")->add("comment/comments", ["comments" => $comments]);
-        $this->di->get("pageRender")->renderPage(["title" => $title]);
     }
 
 
-    /**
-     * Post a comment
-     *
-     * @return void
-     */
-    public function postComment()
+    public function getPostIndex()
     {
-        $comment = [];
-        $comment["email"] = htmlspecialchars($this->di->get("request")->getPost("email"));
-        $comment["text"] = htmlspecialchars($this->di->get("request")->getPost("text"));
-        
-        // Add comment to all comments
-        $this->di->get("comment")->addComment($comment);
-        
-        $this->di->get("response")->redirect("comments");
+        $title          = "Alla kommentarer";
+        $view           = $this->di->get("view");
+        $pageRender     = $this->di->get("pageRender");
+        $comment        = new Comment();
+        $comment->setDb($this->di->get("db"));
+
+        $form           = new AddCommentForm($this->di);
+
+        $form->check();
+
+        $data = [
+            "comments" => $comment->getAll(),
+            "form" => $form->getHTML(),
+        ];
+
+        $view->add("comment/index", $data);
+
+        $pageRender->renderPage(["title" => $title]);
     }
 
 
-    /**
-     * Get a singel comment.
-     *
-     * @param int $id id of comment to get
-     * @return void
-     */
     public function getComment($id)
     {
-        // Get single comment
-        $comment = $this->di->get("comment")->getComment($id);
-        
-        // Parse comment for markdown
-        $comment["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
-        
-        $title = "Comment # " . $id;
+        $title          = "Redigera kommentar";
+        $view           = $this->di->get("view");
+        $pageRender     = $this->di->get("pageRender");
 
-        // Add to view and render
-        $this->di->get("view")->add("comment/comment", ["comment" => $comment]);
-        $this->di->get("pageRender")->renderPage(["title" => $title]);
+        $comment = new Comment();
+        $comment->setDb($this->di->get("db"));
+        $comment->get($id);
+
+        $data = [
+            "comment" => $comment,
+        ];
+
+        $view->add("comment/comment", $data);
+
+        $pageRender->renderPage(["title" => $title]);
     }
 
 
-
-    public function editComment($id)
+    public function getPostUpdate($id)
     {
-        $comment = $this->di->get("comment")->getComment($id);
+        $title          = "Redigera kommentar";
+        $view           = $this->di->get("view");
+        $pageRender     = $this->di->get("pageRender");
+        $form           = new UpdateCommentForm($this->di, $id);
 
-        $title = "Edit comment";
+        $form->check();
 
-        $this->di->get("view")->add("comment/edit", ["comment" => $comment]);
-        $this->di->get("pageRender")->renderPage(["title" => $title]);
+        $data = [
+            "form" => $form->getHTML(),
+        ];
+
+        $view->add("comment/update", $data);
+
+        $pageRender->renderPage(["title" => $title]);
     }
 
 
-    public function upsertComment()
+    public function getDelete($id)
     {
-        $comment = [];
-        $comment["id"] = htmlspecialchars($this->di->get("request")->getPost("id"));
-        $comment["email"] = htmlspecialchars($this->di->get("request")->getPost("email"));
-        $comment["text"] = htmlspecialchars($this->di->get("request")->getPost("text"));
+        $comment = new Comment();
+        $comment->setDb($this->di->get("db"));
+        $comment->find("id", $id);
 
-        $this->di->get("comment")->upsertComment($comment);
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
-    }
+        // If logged in user is owner of comment or admin then delete
+        if ($this->di->get("session")->get("user_id") === $comment->user_id || $this->di->get("session")->get("user_role") === "admin") {
+            $comment->delete();
+        }
 
-
-    /**
-     * Delete a comment.
-     *
-     * @param int $id id of comment to delete
-     * @return void
-     */
-    public function deleteComment($id)
-    {
-        $this->di->get("comment")->deleteComment($id);
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
+        $this->di->get("response")->redirect("comment");
     }
 }
