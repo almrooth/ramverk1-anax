@@ -8,6 +8,7 @@ use \Talm\Comment\User;
 
 /**
  * A database driven model.
+ * @SuppressWarnings("camelcase")
  */
 class Comment extends ActiveRecordModel
 {

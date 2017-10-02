@@ -59,7 +59,8 @@ CREATE TABLE rv1_users (
 
 SELECT * FROM rv1_users;
 
-UPDATE rv1_users SET role='admin' WHERE id=2;
+UPDATE rv1_users SET role='admin' WHERE id=1;
+UPDATE rv1_users SET deleted=null WHERE id=2;
 
 --
 -- Table rv1_comments

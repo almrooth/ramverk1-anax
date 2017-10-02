@@ -13,6 +13,7 @@ use \Talm\Comment\HTMLForm\UpdateUserForm;
 
 /**
  * A controller class.
+ * @SuppressWarnings("camelcase")
  */
 class UserController implements
     ConfigureInterface,

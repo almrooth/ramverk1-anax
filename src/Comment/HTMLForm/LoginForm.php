@@ -75,6 +75,13 @@ class LoginForm extends FormModel
         // Get the user
         $user->find("username", $username);
 
+        // Check if user is deleted
+        if (isset($user->deleted)) {
+            $this->form->rememberValues();
+            $this->form->addOutput("User is inactive. Contact administrator.");
+            return false;
+        }
+
         // Save user to session
         $this->di->get("session")->set("user_id", $user->id);
         $this->di->get("session")->set("username", $user->username);

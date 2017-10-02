@@ -62,7 +62,7 @@ class UpdateUserForm extends FormModel
      *
      * @param integer $id get details on item with id.
      * 
-     * @return boolean true if okey, false if something went wrong.
+     * @return User true if okey, false if something went wrong.
      */
     public function getItemDetails($id)
     {

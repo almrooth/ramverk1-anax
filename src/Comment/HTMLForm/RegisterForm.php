@@ -82,6 +82,16 @@ class RegisterForm extends FormModel
             return false;
         }
 
+        // Check if username is taken
+        $user = new User();
+        $user->setDb($this->di->get("db"));
+        $user->find("username", $username);
+        
+        if (isset($user->id)) {
+            $this->form->addOutput("Username already taken.");
+            return false;
+        }
+
         // Save user to database
         $user = new User();
         $user->setDb($this->di->get("db"));
