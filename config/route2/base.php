@@ -12,13 +12,13 @@ return [
             "info" => "Index page",
             "requestMethod" => "get",
             "path" => "",
-            "callable" => ["pageController", "getIndex"], 
+            "callable" => ["pageController", "getIndex"],
         ],
         [
             "info" => "About page",
             "requestMethod" => "get",
             "path" => "about",
-            "callable" => ["pageController", "getAbout"], 
+            "callable" => ["pageController", "getAbout"],
         ],
     ]
 ];

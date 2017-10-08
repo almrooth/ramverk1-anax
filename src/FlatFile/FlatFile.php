@@ -1,6 +1,6 @@
 <?php
 
-namespace Talm\FlatFile;
+namespace Almrooth\FlatFile;
 
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;

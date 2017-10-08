@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "de110daaaf73c8a33869b6debdbde6c4",
+    "content-hash": "11c5257365f0e9a415a02eec5f7d02b8",
     "packages": [
+        {
+            "name": "almrooth/comment",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/almrooth/comment.git",
+                "reference": "7d09586a91552889dee2fc0f52dea1d575f7e837"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/almrooth/comment/zipball/7d09586a91552889dee2fc0f52dea1d575f7e837",
+                "reference": "7d09586a91552889dee2fc0f52dea1d575f7e837",
+                "shasum": ""
+            },
+            "require": {
+                "anax/configure": "^1.0",
+                "anax/database": "^1.1",
+                "anax/di": "^1.0",
+                "anax/htmlform": "^1.0",
+                "anax/page": "^1.0",
+                "anax/request": "^1.0",
+                "anax/response": "^1.0",
+                "anax/router": "^1.0",
+                "anax/session": "^1.0",
+                "anax/textfilter": "^1.0",
+                "anax/url": "^1.0",
+                "anax/view": "^1.0",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Anax\\": "src/",
+                    "Almrooth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Almroth",
+                    "email": "almrooth@gmail.com",
+                    "homepage": "https://dbwebb.se",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Comment module for Anax.",
+            "homepage": "https://dbwebb.se/anax",
+            "keywords": [
+                "boilerplate",
+                "education",
+                "framework",
+                "micro",
+                "mvc"
+            ],
+            "time": "2017-10-08T17:33:22+00:00"
+        },
         {
             "name": "anax/common",
             "version": "v1.0.19",

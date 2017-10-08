@@ -105,7 +105,7 @@ return [
         "flatFile" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Talm\FlatFile\FlatFile();
+                $obj = new \Almrooth\FlatFile\FlatFile();
                 $obj->setDI($this);
                 return $obj;
             }
@@ -113,7 +113,7 @@ return [
         "pageRender" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Talm\Page\PageRender();
+                $obj = new \Almrooth\Page\PageRender();
                 $obj->setDI($this);
                 return $obj;
             }
@@ -138,23 +138,15 @@ return [
         "pageController" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Talm\Page\PageController();
+                $obj = new \Almrooth\Page\PageController();
                 $obj->setDI($this);
                 return $obj;
             }
         ],
-        // "comment" => [
-        //     "shared" => true,
-        //     "callback" => function () {
-        //         $obj = new \Talm\Comment\CommentSession();
-        //         $obj->injectSession($this->get("session"));
-        //         return $obj;
-        //     }
-        // ],
         "commentController" => [
             "shared" => false,
             "callback" => function () {
-                $obj = new \Talm\Comment\CommentController();
+                $obj = new \Almrooth\Comment\CommentController();
                 $obj->setDI($this);
                 return $obj;
             }
@@ -170,7 +162,7 @@ return [
         "userController" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Talm\Comment\UserController();
+                $obj = new \Almrooth\Comment\UserController();
                 $obj->setDI($this);
                 return $obj;
             }
@@ -178,7 +170,7 @@ return [
         "adminController" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Talm\Comment\AdminController();
+                $obj = new \Almrooth\Comment\AdminController();
                 $obj->setDI($this);
                 return $obj;
             }

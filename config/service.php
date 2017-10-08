@@ -14,10 +14,10 @@ $app->textfilter = new \Anax\TextFilter\TextFilter();
 $app->session    = new \Anax\Session\SessionConfigurable();
 $app->rem           = new \Anax\RemServer\RemServer();
 $app->remController = new \Anax\RemServer\RemServerController();
-$app->pageController = new \Talm\Page\PageController();
-$app->flatFile      = new \Talm\FlatFile\FlatFile();
-$app->comment           = new \Talm\Comment\CommentSession();
-$app->commentController = new \Talm\Comment\CommentController();
+$app->pageController = new \Almrooth\Page\PageController();
+$app->flatFile      = new \Almrooth\FlatFile\FlatFile();
+$app->comment           = new \Almrooth\Comment\CommentSession();
+$app->commentController = new \Almrooth\Comment\CommentController();
 
 // Configure request
 $app->request->init();
